@@ -5,9 +5,10 @@ from sandhi_helper import sandhi_all
 st.title("सन्धिं कुरु")
 st.markdown('''
     Please enter a single sentence without any period (.) or (।)
+    
     **Note**: Sometimes the sandhi results may not be complete/accurate
     
-    Acknowledgements: This UI relies on:
+    Acknowledgements:
     * [sandhi](https://github.com/hrishikeshrt/sandhi) python library
     * [indic_transliteration](https://github.com/indic-transliteration/indic_transliteration_py).
 '''    
