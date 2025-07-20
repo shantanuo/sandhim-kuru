@@ -14,6 +14,9 @@ st.markdown('''
 '''    
 )
 
+if "sandhi_output" not in st.session_state:
+    st.session_state.sandhi_output = None
+
 schemes = list(sanscript.brahmic.SCHEMES)
 schemes.extend(sanscript.roman.SCHEMES)
 dev_index = schemes.index(sanscript.DEVANAGARI)
@@ -34,15 +37,16 @@ with st.form("input_form"):
             index=dev_index,
             key = "output_trans"
         )
-        
+    top_n = st.slider("No. of forms to retain at each stage", 1, 10, 5, 1)
     input_text = st.text_area("Input text to be sandhi-ed")
-        
     submitted = st.form_submit_button("Submit")
     if submitted:
-        input_text_dev = sanscript.transliterate(input_text, input_trans, sanscript.DEVANAGARI)
-        # result = sandhi_builder(input_text_dev)
-        result = sandhi_all(input_text_dev)
-        st.subheader("Possible Sandhi-ed forms")
+        st.session_state.sandhi_output = sandhi_all(input_text, top_n, input_trans, output_trans)
+        
+if result := st.session_state.sandhi_output:
+    st.subheader("Possible Sandhi-ed form:")
+    st.text(result.pop(0))
+    with st.expander("Show additional options"):
         for r in result:
             r_output = sanscript.transliterate(r, sanscript.DEVANAGARI, output_trans)
             st.text(r_output)
