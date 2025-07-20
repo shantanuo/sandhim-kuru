@@ -25,7 +25,9 @@ def sandhi_all(text: str, top_n: int, input_trans: str, output_trans: str) -> li
         results = new_results[:top_n]
 
     for i, r in enumerate(results):
-        r = r.replace("Z", "ऽ")
+        # Note - Z in WX can represent avagraha for Sanskrit
+        # https://en.wikipedia.org/wiki/WX_notation#Anusv%C4%81ra_and_visarga
+        r = r.replace("Z", "'")
         r_trans = transliterate(r, WX, output_trans)
         results[i] = r_trans
 
