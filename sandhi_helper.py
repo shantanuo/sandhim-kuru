@@ -11,13 +11,13 @@ def sandhi_all(text: str, top_n: int, input_trans: str, output_trans: str) -> li
         text_wx = text_wx[:-1]
     words = text_wx.split()
 
-    results = [words[0]]
-    rem = words[1:]
+    results = [words[-1]]
+    rem = words[:-1]
 
     while rem:
         new_results = []
-        right = rem.pop(0)
-        for left in results:
+        left = rem.pop()
+        for right in results:
             res = S.sandhi(left, right, WX)
             for r in res:
                 new_results.append(r[0])
