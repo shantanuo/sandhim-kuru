@@ -1,7 +1,8 @@
 import sandhi
-from indic_transliteration.sanscript import transliterate, WX
+from indic_transliteration.sanscript import transliterate, WX, SCHEMES
 
 S = sandhi.Sandhi()
+consonants = SCHEMES[WX]["consonants"].values()
 
 
 def sandhi_all(text: str, top_n: int, input_trans: str, output_trans: str) -> list[str]:
@@ -20,7 +21,10 @@ def sandhi_all(text: str, top_n: int, input_trans: str, output_trans: str) -> li
         for right in results:
             res = S.sandhi(left, right, WX)
             for r in res:
-                new_results.append(r[0])
+                if r[2] == "varNamelana" and right[0] in consonants:
+                    new_results.append(left + " " + right)
+                else:
+                    new_results.append(r[0])
         new_results.sort(key=len)
         results = new_results[:top_n]
 
