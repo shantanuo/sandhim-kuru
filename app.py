@@ -1,6 +1,8 @@
 import streamlit as st
 from indic_transliteration import sanscript
 from sandhi_helper import sandhi_all
+from streamlit_arborist import tree_view
+
 
 st.title("सन्धिं कुरु")
 st.markdown(
@@ -35,9 +37,11 @@ with st.form("input_form"):
     )
     submitted = st.form_submit_button("Submit")
     if submitted:
-        st.session_state.sandhi_output = sandhi_all(
+        results, graph = sandhi_all(
             input_text, top_n, input_trans, output_trans
         )
+        st.session_state.sandhi_output = results
+        st.session_state.graph_data = graph.to_tree_view()
 
 if result := st.session_state.sandhi_output:
     st.subheader("Possible Sandhi-ed form:")
@@ -45,7 +49,18 @@ if result := st.session_state.sandhi_output:
     if result[1:]:
         with st.expander("Show additional results"):
             for r in result:
-                r_output = sanscript.transliterate(
-                    r, sanscript.DEVANAGARI, output_trans
-                )
-                st.text(r_output)
+                st.text(r)
+
+    with st.expander("Show Full Sandhi Graph"):
+        st.markdown("Use the arrows to navigate the graph and select the desired form")
+        selected = tree_view(
+            data=[st.session_state.graph_data],
+            icons={
+                "open": ":material/arrow_drop_down:",
+                "closed": ":material/arrow_right:",
+                "leaf": ":material/arrow_right_alt:"
+            },
+            open_by_default=False
+        )
+        if selected:
+            st.markdown(f"Selected final form: {selected["name"]}")

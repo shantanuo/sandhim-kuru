@@ -1,2 +1,4 @@
-sandhi
+sandhi>=0.1.2
 indic_transliteration
+networkx
+streamlit-arborist
