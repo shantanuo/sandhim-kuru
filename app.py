@@ -1,6 +1,7 @@
 import streamlit as st
 from indic_transliteration import sanscript
-from sandhi_helper import sandhi_all
+from sandhi_helper import sandhi_all as sandhi_sandhi
+from sanskrit_parser_helper import sandhi_all as sp_sandhi
 from streamlit_arborist import tree_view
 
 
@@ -31,13 +32,19 @@ with st.form("input_form"):
         output_trans = st.selectbox(
             "Output Transliteration", schemes, index=dev_index, key="output_trans"
         )
+    library = st.radio("Sandhi library to use:", ["sandhi", "sanskrit_parser"], horizontal=True)
+    if library == "sandhi":
+        sandhi_fn = sandhi_sandhi
+    else:
+        sandhi_fn = sp_sandhi
+
     top_n = st.slider("No. of forms to retain at each stage", 1, 10, 5, 1)
     input_text = st.text_area(
         "Input text to be sandhi-ed (Please enter a single sentence)"
     )
     submitted = st.form_submit_button("Submit")
     if submitted:
-        results, graph = sandhi_all(
+        results, graph = sandhi_fn(
             input_text, top_n, input_trans, output_trans
         )
         st.session_state.sandhi_output = results
