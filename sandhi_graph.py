@@ -41,7 +41,6 @@ class SandhiGraph:
             "id": root,
             "name": self.transliterate(root),
             }
-        print(f"output = {data['id']}")
         self._add_children(data)
         return data
 
