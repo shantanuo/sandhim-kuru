@@ -47,8 +47,7 @@ def sandhi_all(text: str, top_n: int, input_trans: str, output_trans: str) -> li
 
     return results, G
 
-
-def sanskrit_one(sans_string: str):
+def sandhi_all(sans_string: str, top_n: int, input_trans: str, output_trans: str) -> list[str]:
     murl = 'https://4cgfqhuw4wd5sudvarj4mv4b6a0wxwim.lambda-url.us-east-1.on.aws/?'
 
     mresponse = requests.get(murl + sans_string)
@@ -61,11 +60,9 @@ def sanskrit_one(sans_string: str):
             parts.remove(i)
             parts.insert(0, i)
             break
+    G = SandhiGraph(SLP1, output_trans)
 
-    return parts
-
-
-
+    return parts, G
 
 if __name__ == "__main__":
     from indic_transliteration.sanscript import DEVANAGARI
