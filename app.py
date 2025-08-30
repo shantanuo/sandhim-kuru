@@ -67,8 +67,6 @@ with st.form("input_form"):
 
 # Display the results from the session state
 if all_results := st.session_state.get("all_results"):
-    st.header("Side-by-Side Comparison of Sandhi Results")
-    st.markdown("---")
 
     # Get the library names and their results in a list to ensure order
     results_list = list(all_results.items())
