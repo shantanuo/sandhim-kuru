@@ -13,7 +13,7 @@ st.markdown(
     
     Acknowledgements:  [sandhi](https://github.com/hrishikeshrt/sandhi), 
     [sanskrit_parser](https://github.com/kmadathil/sanskrit_parser),
-    [sanskrit_one](https://github.com/shantanuo/sandhi).
+    [sanskrit_one](https://github.com/shantanuo/sandhi)
 """
 )
 
