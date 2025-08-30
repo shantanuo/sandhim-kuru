@@ -3,3 +3,4 @@ indic_transliteration
 networkx
 streamlit-arborist
 sanskrit_parser
+requests

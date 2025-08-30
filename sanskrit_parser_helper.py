@@ -3,6 +3,7 @@ from sanskrit_parser.base.sanskrit_base import SanskritNormalizedString
 from indic_transliteration.sanscript import transliterate, SLP1
 from sandhi_graph import SandhiGraph
 import logging
+import requests
 
 logger = logging.getLogger("sanskrit_parser.parser.sandhi")
 logger.setLevel(logging.INFO)
