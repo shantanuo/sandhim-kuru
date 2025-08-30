@@ -12,8 +12,8 @@ st.markdown(
     **Note**: Sometimes the sandhi results may not be complete/accurate
     
     Acknowledgements:  [sandhi](https://github.com/hrishikeshrt/sandhi), 
-    [sanskrit_parser](https://github.com/sanskrit-coders/sanskrit_parser),
-    [indic_transliteration](https://github.com/indic-transliteration/indic_transliteration_py).
+    [sanskrit_parser](https://github.com/kmadathil/sanskrit_parser),
+    [sanskrit_one](https://github.com/shantanuo/sandhi).
 """
 )
 
