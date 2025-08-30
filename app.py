@@ -53,7 +53,7 @@ with st.form("input_form"):
             input_text, top_n, input_trans, output_trans
         )
         st.session_state.sandhi_output = results
-        st.session_state.graph_data = graph.to_tree_view()
+#       st.session_state.graph_data = graph.to_tree_view()
 
 if result := st.session_state.sandhi_output:
     st.subheader("Possible Sandhi-ed form:")
