@@ -33,10 +33,14 @@ with st.form("input_form"):
             "Output Transliteration", schemes, index=dev_index, key="output_trans"
         )
     library = st.radio("Sandhi library to use:", ["sandhi", "sanskrit_one", "sanskrit_parser"], horizontal=True)
+
     if library == "sandhi":
         sandhi_fn = sandhi_sandhi
+    elif library == "sanskrit_one":
+        sandhi_fn = sanskrit_one
     else:
         sandhi_fn = sp_sandhi
+
 
     top_n = st.slider("No. of forms to retain at each stage", 1, 10, 5, 1)
     input_text = st.text_area(
