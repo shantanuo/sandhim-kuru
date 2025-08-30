@@ -3,8 +3,8 @@ from indic_transliteration import sanscript
 from sandhi_helper import sandhi_all as sandhi_sandhi
 from sanskrit_parser_helper import sandhi_all as sp_sandhi
 from sanskrit_parser_helper import sanskrit_one
-from streamlit_arborist import tree_view
 
+st.set_page_config(layout="wide") # Use the wide layout for better side-by-side comparison
 
 st.title("सन्धिं कुरु")
 st.markdown(
@@ -12,12 +12,14 @@ st.markdown(
     **Note**: Sometimes the sandhi results may not be complete/accurate
     
     Acknowledgements:  [sandhi](https://github.com/hrishikeshrt/sandhi), 
+    [sanskrit_parser](https://github.com/sanskrit-coders/sanskrit_parser),
     [indic_transliteration](https://github.com/indic-transliteration/indic_transliteration_py).
 """
 )
 
-if "sandhi_output" not in st.session_state:
-    st.session_state.sandhi_output = None
+# Use a new session state variable to store results from all libraries
+if "all_results" not in st.session_state:
+    st.session_state.all_results = None
 
 schemes = list(sanscript.brahmic.SCHEMES)
 schemes.extend(sanscript.roman.SCHEMES)
@@ -33,15 +35,6 @@ with st.form("input_form"):
         output_trans = st.selectbox(
             "Output Transliteration", schemes, index=dev_index, key="output_trans"
         )
-    library = st.radio("Sandhi library to use:", ["sandhi", "sanskrit_one", "sanskrit_parser"], horizontal=True)
-
-    if library == "sandhi":
-        sandhi_fn = sandhi_sandhi
-    elif library == "sanskrit_one":
-        sandhi_fn = sanskrit_one
-    else:
-        sandhi_fn = sp_sandhi
-
 
     top_n = st.slider("No. of forms to retain at each stage", 1, 10, 5, 1)
     input_text = st.text_area(
@@ -49,17 +42,54 @@ with st.form("input_form"):
     )
     submitted = st.form_submit_button("Submit")
     if submitted:
-        results, graph = sandhi_fn(
-            input_text, top_n, input_trans, output_trans
-        )
-        st.session_state.sandhi_output = results
-#       st.session_state.graph_data = graph.to_tree_view()
+        # Create a dictionary to hold results from all functions
+        all_results_dict = {}
+        
+        # Define the functions to run with user-friendly names
+        functions_to_run = {
+            "sandhi (hrishikeshrt/sandhi)": sandhi_sandhi,
+            "sanskrit_parser": sp_sandhi,
+            "sanskrit_one (wrapper)": sanskrit_one
+        }
+        
+        # Run each function and store its results
+        with st.spinner("Processing with all libraries..."):
+            for name, func in functions_to_run.items():
+                try:
+                    # We ignore the graph object (_)
+                    results, _ = func(input_text, top_n, input_trans, output_trans)
+                    all_results_dict[name] = results
+                except Exception as e:
+                    all_results_dict[name] = [f"Error: {e}"]
 
-if result := st.session_state.sandhi_output:
-    st.subheader("Possible Sandhi-ed form:")
-    st.text(result[0])
-    if result[1:]:
-        with st.expander("Show additional results"):
-            for r in result:
-                st.text(r)
+        st.session_state.all_results = all_results_dict
 
+
+# Display the results from the session state
+if all_results := st.session_state.get("all_results"):
+    st.header("Side-by-Side Comparison of Sandhi Results")
+    st.markdown("---")
+
+    # Get the library names and their results in a list to ensure order
+    results_list = list(all_results.items())
+    
+    # Create 3 columns, one for each library's results
+    col1, col2, col3 = st.columns(3)
+    cols = [col1, col2, col3]
+
+    # Iterate over the columns and the results simultaneously
+    for i, col in enumerate(cols):
+        # Check if there's a result for this column (in case a function fails)
+        if i < len(results_list):
+            library_name, results = results_list[i]
+            
+            with col:
+                st.subheader(library_name)
+                
+                if results:
+                    # Display all results directly as a bulleted list
+                    for r in results:
+                        # Using markdown with backticks for a clear, code-formatted look
+                        st.markdown(f"- `{r}`")
+                else:
+                    st.info("No results found.")
