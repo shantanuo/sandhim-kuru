@@ -56,10 +56,11 @@ def sanskrit_one(sans_string: str, top_n: int, input_trans: str, output_trans: s
     value = next(iter(d.values()))
 
     parts = value.split()
+    parts = [i.replace('_', ' ') for i in parts]
     for i in parts:
         if i.endswith('*'):
             parts.remove(i)
-            parts.insert(0, i.replace('_', ' '))
+            parts.insert(0, i)
             break
     G = SandhiGraph(SLP1, output_trans)
 
