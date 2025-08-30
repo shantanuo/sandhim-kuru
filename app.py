@@ -63,16 +63,3 @@ if result := st.session_state.sandhi_output:
             for r in result:
                 st.text(r)
 
-    with st.expander("Show Full Sandhi Graph"):
-        st.markdown("Use the arrows to navigate the graph and select the desired form")
-        selected = tree_view(
-            data=[st.session_state.graph_data],
-            icons={
-                "open": ":material/arrow_drop_down:",
-                "closed": ":material/arrow_right:",
-                "leaf": ":material/arrow_right_alt:"
-            },
-            open_by_default=False
-        )
-        if selected:
-            st.markdown(f"Selected final form: {selected["name"]}")
