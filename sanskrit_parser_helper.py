@@ -59,7 +59,7 @@ def sanskrit_one(sans_string: str, top_n: int, input_trans: str, output_trans: s
     for i in parts:
         if i.endswith('*'):
             parts.remove(i)
-            parts.insert(0, i)
+            parts.insert(0, i.replace('_', ' '))
             break
     G = SandhiGraph(SLP1, output_trans)
 
