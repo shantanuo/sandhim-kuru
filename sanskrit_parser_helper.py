@@ -48,7 +48,7 @@ def sandhi_all(text: str, top_n: int, input_trans: str, output_trans: str) -> li
     return results, G
 
 
-def sanskrit_one(d, sans_string):
+def sanskrit_one(sans_string: str):
     murl = 'https://4cgfqhuw4wd5sudvarj4mv4b6a0wxwim.lambda-url.us-east-1.on.aws/?'
 
     mresponse = requests.get(murl + sans_string)

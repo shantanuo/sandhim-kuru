@@ -2,6 +2,7 @@ import streamlit as st
 from indic_transliteration import sanscript
 from sandhi_helper import sandhi_all as sandhi_sandhi
 from sanskrit_parser_helper import sandhi_all as sp_sandhi
+from sanskrit_parser_helper import sanskrit_one
 from streamlit_arborist import tree_view
 
 
