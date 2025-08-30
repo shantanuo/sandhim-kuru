@@ -49,7 +49,7 @@ with st.form("input_form"):
         functions_to_run = {
             "sandhi (hrishikeshrt/sandhi)": sandhi_sandhi,
             "sanskrit_parser": sp_sandhi,
-            "sanskrit_one (shantanuo/sandhi)": sanskrit_one
+            "sandhi (shantanuo/sandhi)": sanskrit_one
         }
         
         # Run each function and store its results
