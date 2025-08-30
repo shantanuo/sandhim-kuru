@@ -51,7 +51,7 @@ def sandhi_all(text: str, top_n: int, input_trans: str, output_trans: str) -> li
 def sanskrit_one(sans_string: str, top_n: int, input_trans: str, output_trans: str) -> list[str]:
     murl = 'https://4cgfqhuw4wd5sudvarj4mv4b6a0wxwim.lambda-url.us-east-1.on.aws/?'
 
-    mresponse = requests.get(murl + sans_string)
+    mresponse = requests.get(murl + sans_string.strip())
     d = mresponse.json()[1]
     value = next(iter(d.values()))
 
