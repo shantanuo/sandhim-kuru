@@ -32,7 +32,7 @@ with st.form("input_form"):
         output_trans = st.selectbox(
             "Output Transliteration", schemes, index=dev_index, key="output_trans"
         )
-    library = st.radio("Sandhi library to use:", ["sandhi","sanskritOne sandhi", "sanskrit_parser"], horizontal=True)
+    library = st.radio("Sandhi library to use:", ["sandhi", "sanskrit_parser"], horizontal=True)
     if library == "sandhi":
         sandhi_fn = sandhi_sandhi
     else:
