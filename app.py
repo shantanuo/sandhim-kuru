@@ -6,7 +6,7 @@ from sanskrit_parser_helper import sanskrit_one
 
 st.set_page_config(layout="wide") # Use the wide layout for better side-by-side comparison
 
-st.title("सन्धिं कुरु")
+st.title("Sandhi Maker")
 st.markdown(
     """    
     **Note**: Sometimes the sandhi results may not be complete/accurate
