@@ -76,8 +76,8 @@ if all_results := st.session_state.get("all_results"):
     results_list = list(all_results.items())
     
     # Create 3 columns, one for each library's results
-    col1, col2, col3 = st.columns(3)
-    cols = [col1, col2, col3]
+    col1, col2, col3, col4 = st.columns(4)
+    cols = [col1, col2, col3, col4]
 
     # Iterate over the columns and the results simultaneously
     for i, col in enumerate(cols):
