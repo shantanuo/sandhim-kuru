@@ -2,7 +2,8 @@ import streamlit as st
 from indic_transliteration import sanscript
 from sandhi_helper import sandhi_all as sandhi_sandhi
 from sanskrit_parser_helper import sandhi_all as sp_sandhi
-from sanskrit_parser_helper import sanskrit_one, arindam_sandhi
+from sanskrit_parser_helper import sanskrit_one
+from sanskrit_parser_helper import arindam_sandhi
 
 st.set_page_config(layout="wide") # Use the wide layout for better side-by-side comparison
 
