@@ -74,8 +74,8 @@ def arindam_sandhi(sans_string: str, top_n: int, input_trans: str, output_trans:
     parts = mresponse.json()['final_sentence']
     G = SandhiGraph(SLP1, output_trans)
     final = list()
-    final.append(parts)
-    
+    if parts:
+        final.append(parts)
 
     return final, G
 
