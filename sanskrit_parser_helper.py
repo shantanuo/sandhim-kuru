@@ -73,8 +73,11 @@ def arindam_sandhi(sans_string: str, top_n: int, input_trans: str, output_trans:
     mresponse = requests.get(murl + sans_string.strip())
     parts = mresponse.json()['final_sentence']
     G = SandhiGraph(SLP1, output_trans)
+    final = list()
+    final.append(parts)
+    
 
-    return parts, G
+    return final, G
 
 
 if __name__ == "__main__":
