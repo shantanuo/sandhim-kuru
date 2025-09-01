@@ -53,7 +53,7 @@ with st.form("input_form"):
             "sandhi (hrishikeshrt/sandhi)": sandhi_sandhi,
             "sanskrit_parser": sp_sandhi,
             "sandhi (shantanuo/sandhi)": sanskrit_one,
-            "sandhi (arindam/sandhi)": arindam_sandhi
+            "sandhi (arindamsaha1507/sandhi)": arindam_sandhi
         }
         
         # Run each function and store its results
