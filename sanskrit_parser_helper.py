@@ -71,7 +71,7 @@ def arindam_sandhi(sans_string: str, top_n: int, input_trans: str, output_trans:
     murl = 'https://7gczg4th6f53qyk7bfbp5auyai0txwui.lambda-url.us-east-1.on.aws/?'
 
     mresponse = requests.get(murl + sans_string.strip())
-    parts = mresponse['final_sentence']
+    parts = mresponse.json()['final_sentence']
     G = SandhiGraph(SLP1, output_trans)
 
     return parts, G
