@@ -2,7 +2,7 @@ import streamlit as st
 from indic_transliteration import sanscript
 from sandhi_helper import sandhi_all as sandhi_sandhi
 from sanskrit_parser_helper import sandhi_all as sp_sandhi
-from sanskrit_parser_helper import sanskrit_one
+from sanskrit_parser_helper import sanskrit_one, arindam_sandhi
 
 st.set_page_config(layout="wide") # Use the wide layout for better side-by-side comparison
 
@@ -14,7 +14,9 @@ st.markdown(
     Acknowledgements:  [sandhi](https://github.com/hrishikeshrt/sandhi), 
     [sanskrit_parser](https://github.com/kmadathil/sanskrit_parser),
     [sanskrit_one](https://github.com/shantanuo/sandhi)
-"""
+    [arindam_sandhi](https://github.com/arindamsaha1507/sandhi)
+    
+    """
 )
 
 # Use a new session state variable to store results from all libraries
@@ -49,7 +51,8 @@ with st.form("input_form"):
         functions_to_run = {
             "sandhi (hrishikeshrt/sandhi)": sandhi_sandhi,
             "sanskrit_parser": sp_sandhi,
-            "sandhi (shantanuo/sandhi)": sanskrit_one
+            "sandhi (shantanuo/sandhi)": sanskrit_one,
+            "sandhi (arindam/sandhi)": arindam_sandhi
         }
         
         # Run each function and store its results
