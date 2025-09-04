@@ -51,7 +51,7 @@ with st.form("input_form"):
         # Define the functions to run with user-friendly names
         functions_to_run = {
             "sandhi (hrishikeshrt/sandhi)": sandhi_sandhi,
-            "sanskrit_parser": sp_sandhi,
+            "sandhi (kmadathil/sanskrit_parser)": sp_sandhi,
             "sandhi (shantanuo/sandhi)": sanskrit_one,
             "sandhi (arindamsaha1507/sandhi)": arindam_sandhi
         }
