@@ -15,7 +15,6 @@ def save_to_dynamodb(sandhi_texts, source_library):
         mystring = f"Reported mistake from '{source_library}': {sandhi_texts}"
         encoded_msg = urllib.parse.quote(mystring, safe="")
         mresponse = requests.get(murl + encoded_msg)
-        st.warning(murl + encoded_msg)
         st.warning(mresponse.text)
     else:
         st.warning(f"No results to report from '{source_library}'.")
@@ -113,5 +112,5 @@ if all_results := st.session_state.get("all_results"):
                     st.info("No results found.")
                 
                 # Place the single "Report mistake" button at the bottom of the column
-                if st.button(f"Report mistake for {library_name}", key=f"report_column_{library_name}"):
+                if st.button(f"Report mistake", key=f"report_column_{library_name}"):
                     save_to_dynamodb(results, library_name)
