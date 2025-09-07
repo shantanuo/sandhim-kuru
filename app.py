@@ -5,6 +5,7 @@ from sanskrit_parser_helper import sandhi_all as sp_sandhi
 from sanskrit_parser_helper import sanskrit_one
 from sanskrit_parser_helper import arindam_sandhi
 import requests
+import urllib.parse
 
 # For demonstration purposes, we'll simulate a database interaction.
 # In a real application, you would replace this with actual AWS DynamoDB calls.
@@ -12,8 +13,9 @@ def save_to_dynamodb(sandhi_texts, source_library):
     murl = 'https://mq3lf5q5bbbqkfwrvu6pniibxu0kxikz.lambda-url.us-east-1.on.aws/?'
     if sandhi_texts:
         mystring = f"Reported mistake from '{source_library}': {sandhi_texts}"
-        mresponse = requests.get(murl + mystring)
-        st.warning(murl + mystring)
+        encoded_msg = urllib.parse.quote(mystring, safe="")
+        mresponse = requests.get(murl + encoded_msg)
+        st.warning(murl + encoded_msg)
         st.warning(mresponse.text)
     else:
         st.warning(f"No results to report from '{source_library}'.")
