@@ -4,6 +4,7 @@ from sandhi_helper import sandhi_all as sandhi_sandhi
 from sanskrit_parser_helper import sandhi_all as sp_sandhi
 from sanskrit_parser_helper import sanskrit_one
 from sanskrit_parser_helper import arindam_sandhi
+import requests
 
 # For demonstration purposes, we'll simulate a database interaction.
 # In a real application, you would replace this with actual AWS DynamoDB calls.
