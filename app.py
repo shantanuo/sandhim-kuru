@@ -8,33 +8,13 @@ from sanskrit_parser_helper import arindam_sandhi
 # For demonstration purposes, we'll simulate a database interaction.
 # In a real application, you would replace this with actual AWS DynamoDB calls.
 def save_to_dynamodb(sandhi_texts, source_library):
-    """
-    Simulates saving the reported mistake to a DynamoDB database.
-    This version saves all results from a given library as a list.
-    """
+    murl = 'https://mq3lf5q5bbbqkfwrvu6pniibxu0kxikz.lambda-url.us-east-1.on.aws/?'
     if sandhi_texts:
-        st.success(f"Reported mistake from '{source_library}': {sandhi_texts} (This would be saved to DynamoDB)")
+        mystring = f"Reported mistake from '{source_library}': {sandhi_texts}"
+        mresponse = requests.get(murl + mystring)
     else:
         st.warning(f"No results to report from '{source_library}'.")
-    # Example of how you might use boto3 (uncomment and configure for actual use):
-    # import boto3
-    # import uuid
-    # from datetime import datetime
-    # try:
-    #     dynamodb = boto3.resource('dynamodb', region_name='your_aws_region')
-    #     table = dynamodb.Table('your_dynamodb_table_name')
-    #     table.put_item(
-    #         Item={
-    #             'id': str(uuid.uuid4()), # Unique ID for the entry
-    #             'reported_sandhi_texts': sandhi_texts, # Store all texts from the column
-    #             'source_library': source_library,
-    #             'timestamp': str(datetime.now())
-    #         }
-    #     )
-    #     st.success(f"Reported mistake successfully saved from {source_library}!")
-    # except Exception as e:
-    #     st.error(f"Error saving to DynamoDB: {e}")
-
+        
 
 st.set_page_config(layout="wide") # Use the wide layout for better side-by-side comparison
 
