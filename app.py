@@ -7,21 +7,26 @@ from sanskrit_parser_helper import arindam_sandhi
 
 # For demonstration purposes, we'll simulate a database interaction.
 # In a real application, you would replace this with actual AWS DynamoDB calls.
-def save_to_dynamodb(sandhi_text, source_library):
+def save_to_dynamodb(sandhi_texts, source_library):
     """
     Simulates saving the reported mistake to a DynamoDB database.
-    In a real application, you would use boto3 here to interact with AWS.
+    This version saves all results from a given library as a list.
     """
-    st.success(f"Reported mistake from '{source_library}': '{sandhi_text}' (This would be saved to DynamoDB)")
+    if sandhi_texts:
+        st.success(f"Reported mistake from '{source_library}': {sandhi_texts} (This would be saved to DynamoDB)")
+    else:
+        st.warning(f"No results to report from '{source_library}'.")
     # Example of how you might use boto3 (uncomment and configure for actual use):
     # import boto3
+    # import uuid
+    # from datetime import datetime
     # try:
     #     dynamodb = boto3.resource('dynamodb', region_name='your_aws_region')
     #     table = dynamodb.Table('your_dynamodb_table_name')
     #     table.put_item(
     #         Item={
     #             'id': str(uuid.uuid4()), # Unique ID for the entry
-    #             'sandhi_text': sandhi_text,
+    #             'reported_sandhi_texts': sandhi_texts, # Store all texts from the column
     #             'source_library': source_library,
     #             'timestamp': str(datetime.now())
     #         }
@@ -115,11 +120,13 @@ if all_results := st.session_state.get("all_results"):
                 st.subheader(library_name)
                 
                 if results:
+                    # Display all results directly as a bulleted list
                     for r in results:
-                        # Display the result
+                        # Using markdown with backticks for a clear, code-formatted look
                         st.markdown(f"- `{r}`")
-                        # Add the "Report mistake" button below each entry
-                        if st.button(f"Report mistake", key=f"{library_name}-{r}"):
-                            save_to_dynamodb(r, library_name)
                 else:
                     st.info("No results found.")
+                
+                # Place the single "Report mistake" button at the bottom of the column
+                if st.button(f"Report mistake for {library_name}", key=f"report_column_{library_name}"):
+                    save_to_dynamodb(results, library_name)
