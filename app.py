@@ -13,6 +13,7 @@ def save_to_dynamodb(sandhi_texts, source_library):
     if sandhi_texts:
         mystring = f"Reported mistake from '{source_library}': {sandhi_texts}"
         mresponse = requests.get(murl + mystring)
+        st.warning(murl + mystring)
         st.warning(mresponse.text)
     else:
         st.warning(f"No results to report from '{source_library}'.")
