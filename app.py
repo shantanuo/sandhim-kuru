@@ -9,10 +9,10 @@ import urllib.parse
 
 # For demonstration purposes, we'll simulate a database interaction.
 # In a real application, you would replace this with actual AWS DynamoDB calls.
-def save_to_dynamodb(sandhi_texts, source_library):
+def save_to_dynamodb(sandhi_texts, source_library, input_text):
     murl = 'https://mq3lf5q5bbbqkfwrvu6pniibxu0kxikz.lambda-url.us-east-1.on.aws/?'
     if sandhi_texts:
-        mystring = f"Reported mistake from '{source_library}': {sandhi_texts}"
+        mystring = f"Reported mistake for input '{input_text}' from '{source_library}': {sandhi_texts}"
         encoded_msg = urllib.parse.quote(mystring, safe="")
         mresponse = requests.get(murl + encoded_msg)
         st.warning(mresponse.text)
@@ -113,4 +113,4 @@ if all_results := st.session_state.get("all_results"):
                 
                 # Place the single "Report mistake" button at the bottom of the column
                 if st.button(f"Report mistake", key=f"report_column_{library_name}"):
-                    save_to_dynamodb(results, library_name)
+                    save_to_dynamodb(results, library_name, input_text)
