@@ -5,6 +5,32 @@ from sanskrit_parser_helper import sandhi_all as sp_sandhi
 from sanskrit_parser_helper import sanskrit_one
 from sanskrit_parser_helper import arindam_sandhi
 
+# For demonstration purposes, we'll simulate a database interaction.
+# In a real application, you would replace this with actual AWS DynamoDB calls.
+def save_to_dynamodb(sandhi_text, source_library):
+    """
+    Simulates saving the reported mistake to a DynamoDB database.
+    In a real application, you would use boto3 here to interact with AWS.
+    """
+    st.success(f"Reported mistake from '{source_library}': '{sandhi_text}' (This would be saved to DynamoDB)")
+    # Example of how you might use boto3 (uncomment and configure for actual use):
+    # import boto3
+    # try:
+    #     dynamodb = boto3.resource('dynamodb', region_name='your_aws_region')
+    #     table = dynamodb.Table('your_dynamodb_table_name')
+    #     table.put_item(
+    #         Item={
+    #             'id': str(uuid.uuid4()), # Unique ID for the entry
+    #             'sandhi_text': sandhi_text,
+    #             'source_library': source_library,
+    #             'timestamp': str(datetime.now())
+    #         }
+    #     )
+    #     st.success(f"Reported mistake successfully saved from {source_library}!")
+    # except Exception as e:
+    #     st.error(f"Error saving to DynamoDB: {e}")
+
+
 st.set_page_config(layout="wide") # Use the wide layout for better side-by-side comparison
 
 st.title("Sandhi Maker")
@@ -50,10 +76,10 @@ with st.form("input_form"):
         
         # Define the functions to run with user-friendly names
         functions_to_run = {
-            "hrishikeshrt/sandhi": sandhi_sandhi,
-            "kmadathil/sanskrit_parser": sp_sandhi,
-            "shantanuo/sandhi": sanskrit_one,
-            "arindamsaha1507/sandhi": arindam_sandhi
+            "sandhi (hrishikeshrt/sandhi)": sandhi_sandhi,
+            "sanskrit_parser": sp_sandhi,
+            "sandhi (shantanuo/sandhi)": sanskrit_one,
+            "sandhi (arindamsaha1507/sandhi)": arindam_sandhi
         }
         
         # Run each function and store its results
@@ -75,7 +101,7 @@ if all_results := st.session_state.get("all_results"):
     # Get the library names and their results in a list to ensure order
     results_list = list(all_results.items())
     
-    # Create 3 columns, one for each library's results
+    # Create 4 columns, one for each library's results
     col1, col2, col3, col4 = st.columns(4)
     cols = [col1, col2, col3, col4]
 
@@ -89,9 +115,11 @@ if all_results := st.session_state.get("all_results"):
                 st.subheader(library_name)
                 
                 if results:
-                    # Display all results directly as a bulleted list
                     for r in results:
-                        # Using markdown with backticks for a clear, code-formatted look
+                        # Display the result
                         st.markdown(f"- `{r}`")
+                        # Add the "Report mistake" button below each entry
+                        if st.button(f"Report mistake", key=f"{library_name}-{r}"):
+                            save_to_dynamodb(r, library_name)
                 else:
                     st.info("No results found.")
