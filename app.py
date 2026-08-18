@@ -4,6 +4,8 @@ from sandhi_helper import sandhi_all as sandhi_sandhi
 from sanskrit_parser_helper import sandhi_all as sp_sandhi
 from sanskrit_parser_helper import sanskrit_one
 from sanskrit_parser_helper import arindam_sandhi
+from sanskrit_parser_helper import samvadah_sandhi
+
 import requests
 import urllib.parse
 
@@ -31,6 +33,7 @@ st.markdown(
     [sanskrit_parser](https://github.com/kmadathil/sanskrit_parser),
     [sanskrit_one](https://github.com/shantanuo/sandhi)
     [arindam_sandhi](https://github.com/arindamsaha1507/sandhi)
+    [samvadah_sandhi](https://github.com/samvadah/sandhi)
     
     """
 )
