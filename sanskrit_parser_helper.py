@@ -85,6 +85,25 @@ def arindam_sandhi(sans_string: str, top_n: int, input_trans: str, output_trans:
     return final, G
 
 
+def samvadah_sandhi(sans_string: str, top_n: int, input_trans: str, output_trans: str) -> list[str]:
+    murl = 'https://lp57kikpkytr6o6qhz74zqrsfy0rweat.lambda-url.us-east-1.on.aws/?'
+
+    mresponse = requests.get(murl + sans_string.strip())
+    parts = ''
+    try:
+        parts = mresponse.json()['final_sentence']
+    except:
+        pass
+    G = SandhiGraph(SLP1, output_trans)
+    final = list()
+    if parts:
+        final.append(parts)
+
+    return final, G
+
+
+
+
 if __name__ == "__main__":
     from indic_transliteration.sanscript import DEVANAGARI
 
