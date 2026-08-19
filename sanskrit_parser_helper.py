@@ -91,7 +91,7 @@ def samvadah_sandhi(
     output_trans: str
 ) -> tuple[list[str], SandhiGraph]:
 
-    murl = "https://lp57kikpkytr6o6qhz74zqrsfy0rweat.lambda-url.us-east-1.on.aws/"
+    murl = "https://5hew24onlw3m2nagmi6zhoqdeu0fbekw.lambda-url.us-east-1.on.aws/"
 
     parts = ""
 
