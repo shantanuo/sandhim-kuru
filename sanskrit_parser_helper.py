@@ -84,8 +84,45 @@ def arindam_sandhi(sans_string: str, top_n: int, input_trans: str, output_trans:
 
     return final, G
 
+def samvadah_sandhi(
+    sans_string: str,
+    top_n: int,
+    input_trans: str,
+    output_trans: str
+) -> tuple[list[str], SandhiGraph]:
 
-def samvadah_sandhi(sans_string: str, top_n: int, input_trans: str, output_trans: str) -> list[str]:
+    murl = "https://lp57kikpkytr6o6qhz74zqrsfy0rweat.lambda-url.us-east-1.on.aws/"
+
+    parts = ""
+
+    try:
+        mresponse = requests.post(
+            murl,
+            json={"sentence": sans_string.strip()},
+            timeout=30
+        )
+
+        mresponse.raise_for_status()
+
+        data = mresponse.json()
+        parts = data.get("final_sentence", "")
+
+    except requests.RequestException as e:
+        print(f"Sandhi Lambda request failed: {e}")
+
+    except (ValueError, TypeError) as e:
+        print(f"Invalid Lambda response: {e}")
+
+    G = SandhiGraph(SLP1, output_trans)
+
+    final = []
+
+    if parts:
+        final.append(parts)
+
+    return final, G
+    
+def samvadah_sandhi2(sans_string: str, top_n: int, input_trans: str, output_trans: str) -> list[str]:
     murl = 'https://5hew24onlw3m2nagmi6zhoqdeu0fbekw.lambda-url.us-east-1.on.aws/?'
 
     mresponse = requests.get(murl + sans_string.strip())
