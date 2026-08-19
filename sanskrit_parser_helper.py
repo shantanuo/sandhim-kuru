@@ -99,7 +99,7 @@ def samvadah_sandhi(sans_string: str, top_n: int, input_trans: str, output_trans
     if parts:
         final.append(parts)
 
-    return parts, G
+    return final, G
 
 
 
